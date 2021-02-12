@@ -1,46 +1,32 @@
 import { connect } from 'react-redux';
-import { sendMessageCreator, updateNewMessageBodyCreator } from './../../redux/dialogsReducer';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { sendMessageCreator } from './../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
 
-// const DialogsContainer = () => {
-//     return (
-//         <StoreContext.Consumer> 
-//         { 
-//             store => {
-//                 let onSendMessageClick = () => {
-//                     store.dispatch(sendMessageCreator());
-//                 } 
-//                 let onNewMessageChange = (body) => {
-//                     body = store.dispatch(updateNewMessageBodyCreator(body));
-//                 }
 
-//                 return (<Dialogs dialogsPage={store.getState().dialogsPage} 
-//                                 onSendMessageClick={onSendMessageClick} 
-//                                 onNewMessageChange={onNewMessageChange} />)
-//             }
-//         }       
-//         </StoreContext.Consumer>
-//     );
-//   }
-
-  let mapStateToProps = (state) => {
-    return {
-        dialogsPage: state.dialogsPage
-    }
+let mapStateToProps = (state) => {
+  return {
+      dialogsPage: state.dialogsPage,
+      // isAuth: state.auth.isAuth // not need because we get it in withAuthRedirect
   }
+}
 
-  let mapDispatchToProps = (dispatch) => {
-    return {
-        onSendMessageClick: () => {
-            dispatch(sendMessageCreator())
-        },
-        onNewMessageChange: (body) => {
-            body = dispatch(updateNewMessageBodyCreator(body));
-        }
-    }
+let mapDispatchToProps = (dispatch) => {
+  return {
+      onSendMessageClick: (newMessageBody) => {
+          dispatch(sendMessageCreator(newMessageBody))
+      },
   }
+}
 
-  const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-  
-  export default DialogsContainer;
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withAuthRedirect,
+)(Dialogs);
+
+// let AuthRedirectComponent = withAuthRedirect(Dialogs);
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
+
+// export default DialogsContainer;
   

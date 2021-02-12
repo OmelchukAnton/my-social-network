@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { setCurrentPage, followThunkCreator, unfollowThunkCreator, toggleFollowingProgress, getUsersThunkCreator } from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 
 class UsersContainer extends React.Component {
@@ -42,6 +44,13 @@ let mapStateToProps = (state) => {
     }
 }
 
+// export default withAuthRedirect(connect(mapStateToProps, 
+//     {follow: followThunkCreator, unfollow: unfollowThunkCreator , setCurrentPage, toggleFollowingProgress, getUsers: getUsersThunkCreator})
+// (UsersContainer));
+    //internal HOC get the first Container
+    //external HOC get the second Container
 
-export default connect(mapStateToProps, 
-    {follow: followThunkCreator, unfollow: unfollowThunkCreator , setCurrentPage, toggleFollowingProgress, getUsers: getUsersThunkCreator})(UsersContainer)
+export default compose(
+    connect(mapStateToProps, {follow: followThunkCreator, unfollow: unfollowThunkCreator , setCurrentPage, toggleFollowingProgress, getUsers: getUsersThunkCreator}),
+    withAuthRedirect
+)(UsersContainer)
