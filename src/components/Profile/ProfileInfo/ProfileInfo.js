@@ -1,27 +1,31 @@
 import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './ProfileInfo.module.css';
-import ProfileStatus from './ProfileStatus.jsx';
+import ProfileStatusWithHooks from './ProfileStatusWithHooks';
+import userPhoto from './../../../assets/images/user.png';
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
 
-  if(!props.profile) {
+  if(!profile) {
     return <Preloader />
   }
 
-    return (
-      <div>
-        {/* <div>
-          <img alt='img' src="https://www.nasa.gov/sites/default/files/thumbnails/image/651351main_nasasociallogo.jpg"/>
-        </div> */}
-        <div className={s.descriptionBlock}>
-          <img alt='img' src={props.profile.photos.small}/>
-          ava + description
-          <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
-        </div>
-      </div>
-    );
+  const onMainPhotoSelected = (e) => {
+    if(e.target.files.length) {
+      savePhoto(e.target.files[0]);
+    }
   }
+
+  return (
+    <div>
+      <div className={s.descriptionBlock}>
+        <img alt='img' src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
+        { isOwner && <input type="file" onChange={onMainPhotoSelected} /> }
+        <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
+      </div>
+    </div>
+  );
+}
   
   export default ProfileInfo;
   

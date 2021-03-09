@@ -2,33 +2,54 @@ import React from 'react';
 import Profile from './Profile'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getProfileThunkCreator, getUserStatus, updateStatus } from './../../redux/profileReducer';
+import { getUserProfile, getUserStatus, updateStatus, savePhoto } from './../../redux/profileReducer';
 import { Redirect, withRouter } from 'react-router-dom';
 
 class ProfileContainer extends React.Component {
-    componentDidMount() {
+
+    refreshProfile() {
         let userId = this.props.match.params.userId;
         if(!userId) {
-            userId = 2;
+            userId = this.props.authorizedUserId;
+            if(!userId) {
+                this.props.history.push("/login");
+            }
         }
         this.props.getProfile(userId);
         this.props.getUserStatus(userId);
     }
 
+    componentDidMount() {
+        this.refreshProfile();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.match.params.userId != this.props.match.params.userId) {
+            this.refreshProfile();
+        }
+    }
+
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
+            <Profile {...this.props} 
+                isOwner={!this.props.match.params.userId}
+                profile={this.props.profile} 
+                status={this.props.status} 
+                updateStatus={this.props.updateStatus}
+                savePhoto={this.props.savePhoto} />
         )
     }
 }
 
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
 })
 
 export default compose(
-    connect(mapStateToProps, {getProfile: getProfileThunkCreator, getUserStatus, updateStatus}),
+    connect(mapStateToProps, {getProfile: getUserProfile, getUserStatus, updateStatus, savePhoto}),
     withRouter,
 )(ProfileContainer);
 
