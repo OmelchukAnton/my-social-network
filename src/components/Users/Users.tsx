@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserType } from '../../types/Types';
+import { UserType } from '../../types/types';
 import Paginator from '../common/Paginator/Paginator';
 import User from './User';
 
@@ -16,13 +16,13 @@ type PropsType = {
 
 let Users: React.FC<PropsType> = ({currentPage, onPageChanged, totalUsersCount, pageSize, users, ...props}) => {
     return <div>
-            <Paginator currentPage={currentPage} onPageChanged={onPageChanged} 
-                       totalItemsCount={totalUsersCount} pageSize={pageSize} />
-            {users.map(u => <User key={u.id} 
-                                    user={u} 
-                                    followingInProgress={props.followingInProgress} 
-                                    unfollow={props.unfollow} 
-                                    follow={props.follow} />)}
+            <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
+                totalItemsCount={totalUsersCount} pageSize={pageSize} />
+            {users.map(u => <User user={u}  
+                                followingInProgress={props.followingInProgress} 
+                                key={u.id} 
+                                unfollow={props.unfollow} 
+                                follow={props.follow} />)}
         </div>;
 
 }

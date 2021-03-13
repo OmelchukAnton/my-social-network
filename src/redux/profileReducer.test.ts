@@ -1,16 +1,20 @@
 import React from 'react';
-import profileReducer, { addPostActionCreator, deletePost } from "./profileReducer";
+import { ProfileType } from '../types/types';
+import profileReducer, { actions } from "./profileReducer";
 
 let state = {
     posts: [
         {id: 1,  message: 'Hi, how are you?', likesCount: '15'},
         {id: 2,  message: 'Its my first post', likesCount: '23'}
-    ]
+    ],
+    profile: null,
+    status: '',
+    newPostText: ''
 }
 
 test('new post should be added', () => {
     // prepare date
-    let action = addPostActionCreator("new post text");
+    let action = actions.addPostActionCreator("new post text");
     // action
     let newState = profileReducer(state, action);
     // expectation
@@ -19,7 +23,7 @@ test('new post should be added', () => {
 
 test('message of new post should be correct', () => {
     // prepare date
-    let action = addPostActionCreator("new post text");
+    let action = actions.addPostActionCreator("new post text");
     // action
     let newState = profileReducer(state, action);
     // expectation
@@ -28,7 +32,7 @@ test('message of new post should be correct', () => {
 
 test('after deleting length of messages should be decrement', () => {
     // prepare date
-    let action = deletePost(1);
+    let action = actions.deletePost(1);
     // action
     let newState = profileReducer(state, action);
     // expectation
@@ -37,7 +41,7 @@ test('after deleting length of messages should be decrement', () => {
 
 test('after deleting length should not be decrement if id is incorrect', () => {
     // prepare date
-    let action = deletePost(112);
+    let action = actions.deletePost(112);
     // action
     let newState = profileReducer(state, action);
     // expectation
