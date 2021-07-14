@@ -23,7 +23,6 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ''
             }
         }
         case 'SN/PROFILE/SET_USER_PROFILE': {
