@@ -41,7 +41,7 @@ const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwne
   return (
       <div>
         <div className={s.descriptionBlock}>
-          <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
+          <img src={profile.photos.large || userPhoto} alt="img" className={s.mainPhoto}/>
           {isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
 
           { editMode

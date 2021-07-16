@@ -17,7 +17,7 @@ type DispatchPropsType = {
 export function withAuthRedirect<WrappedComponentProps> (WrappedComponent: React.ComponentType) {
 
     const RedirectComponent: React.FC<MapPropsType & DispatchPropsType> = (props) => {
-        let {isAuth, ...restProps} = props;
+        let {isAuth} = props;
 
         if(!isAuth) return <Redirect to='/login' />
 

@@ -11,9 +11,7 @@ type AddPostFormValuesTypeKeys = GetStringCase<AddPostFormValuesType>
 const AddPostForm: React.FC<InjectedFormProps<AddPostFormValuesType, PropsType> & PropsType> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <>
-                { createField<AddPostFormValuesTypeKeys>("Your post", 'newPostText', [require], Input) }
-            </>
+            {createField<AddPostFormValuesTypeKeys>("Your post", 'newPostText', [require], Input)}
             <div>
                 <button>Add post</button>
             </div>
