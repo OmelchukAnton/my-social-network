@@ -2,7 +2,7 @@ import React from 'react';
 import {InjectedFormProps, reduxForm} from 'redux-form';
 import {required} from '../../utils/validators/validators';
 import {createField, Input} from '../common/FormsControls/FormsControls';
-import {connect, useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../redux/authReducer';
 import {Redirect} from 'react-router-dom';
 
@@ -16,10 +16,10 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({handleSubm
             {createField<LoginFormValuesTypeKeys>("Password", "password", [required], Input, {type: "password"})}
             {createField<LoginFormValuesTypeKeys>(undefined, "rememberMe", [], Input, {type: "checkbox"}, "remember me")}
             {error && <div className={style.formSummaryError}>
-                {error }
+                {error}
             </div>}
             <div>
-                <button> Log in </button>
+                <button> Log in</button>
             </div>
         </form>)
 }
@@ -44,12 +44,12 @@ export const LoginPage: React.FC = (props) => {
         dispatch(login(formData.email, formData.password, formData.rememberMe));
     }
 
-    if(isAuth) {
-        return <Redirect to={"/profile"} />
+    if (isAuth) {
+        return <Redirect to={"/profile"}/>
     }
 
     return <div>
         <h1>login page</h1>
-        <LoginReduxForm onSubmit={onSubmit} />
+        <LoginReduxForm onSubmit={onSubmit}/>
     </div>
 }

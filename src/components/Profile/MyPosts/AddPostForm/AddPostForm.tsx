@@ -1,12 +1,13 @@
 import React from "react";
 import {InjectedFormProps, reduxForm} from "redux-form";
-import {createField, GetStringCase, Input} from "../../../common/FormsControls/FormsControls";
+import { createField, GetStringKeys, Input } from "../../../common/FormsControls/FormsControls";
 
 type PropsType = {}
 export type AddPostFormValuesType = {
     newPostText: string
 }
-type AddPostFormValuesTypeKeys = GetStringCase<AddPostFormValuesType>
+
+type AddPostFormValuesTypeKeys = GetStringKeys<AddPostFormValuesType>
 
 const AddPostForm: React.FC<InjectedFormProps<AddPostFormValuesType, PropsType> & PropsType> = (props) => {
     return (

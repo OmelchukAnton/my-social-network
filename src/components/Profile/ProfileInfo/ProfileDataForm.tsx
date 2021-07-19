@@ -1,6 +1,6 @@
 import React from "react";
 import s from './ProfileInfo.module.css';
-import {createField, GetStringCase, Input, Textarea} from "../../common/FormsControls/FormsControls";
+import {createField, GetStringKeys, Input, Textarea} from "../../common/FormsControls/FormsControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import style from "../../common/FormsControls/FormControls.module.css";
 import {ProfileType} from '../../../types/types';
@@ -8,7 +8,7 @@ import {ProfileType} from '../../../types/types';
 type PropsType = {
     profile: ProfileType
 }
-type ProfileTypeKeys = GetStringCase<ProfileType>
+type ProfileTypeKeys = GetStringKeys<ProfileType>
 
 const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, profile, error}) => {
     return <form onSubmit={handleSubmit}>

@@ -12,11 +12,10 @@ import {
     getUsers,
     getUsersFilter
 } from "../../redux/usersSelectors";
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import * as queryString from "querystring";
 
-type PropsType = {
-}
+type PropsType = {}
 
 type QueryParamsType = { term?: string; page?: string; friend?: string };
 export const Users: React.FC<PropsType> = (props) => {
@@ -33,12 +32,9 @@ export const Users: React.FC<PropsType> = (props) => {
     useEffect(() => {
         const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType;
 
-        let actualPage = currentPage;
         let actualFilter = filter;
 
-        if(!!parsed.page) actualPage = Number(parsed.page);
-
-        if(!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
         switch (parsed.friend) {
             case "null":
                 actualFilter = {...actualFilter, friend: null}
@@ -52,15 +48,15 @@ export const Users: React.FC<PropsType> = (props) => {
         }
         // if(!!parsed.friend) actualFilter = {...actualFilter, friend: parsed.friend === "null" ? null : parsed.friend === "true" ? true : false}
 
-        dispatch(getUsersThunkCreator(currentPage, pageSize, filter))
+        dispatch(getUsersThunkCreator(currentPage, pageSize, actualFilter))
     }, [currentPage, dispatch, filter, pageSize, history])
 
     useEffect(() => {
         const query: QueryParamsType = {}
 
-        if(!!filter.term) query.term = filter.term;
-        if(filter.friend !== null) query.friend = String(filter.friend);
-        if(currentPage !== 1) query.page = String(currentPage);
+        if (!!filter.term) query.term = filter.term;
+        if (filter.friend !== null) query.friend = String(filter.friend);
+        if (currentPage !== 1) query.page = String(currentPage);
 
         history.push({
             pathname: '/users',
